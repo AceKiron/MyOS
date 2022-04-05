@@ -19,3 +19,8 @@ int 13h -- Disk I/O
 int 14h -- Serial communications
 int 15h -- Cassette
 int 16h -- Keyboard I/O
+
+
+Tutorial:
+https://github.com/chibicitiberiu/nanobyte_os
+https://www.youtube.com/channel/UCSPIuWADJIMIf9Erf--XAsA
