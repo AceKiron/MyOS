@@ -72,24 +72,157 @@ puts:
 
 main:
     ; Setup data segments.
-    mov ax, 0; Can't write to DS/ES directly.
+    mov ax, 0           ; Can't write to DS/ES directly.
     mov ds, ax
     mov es, ax
 
     ; Setup stack.
     mov ss, ax
-    mov sp, 0x7C00; Stack grows downwards from where we are loaded in memory.
+    mov sp, 0x7C00      ; Stack grows downwards from where we are loaded in memory.
+
+    ; Read something from floppy disk.
+    ; BIOS should set DL to drive number.
+    mov [ebr_drive_number], dl
+
+    mov ax, 1           ; LBA=1, second sector from disk
+    mov cl, 1           ; 1 sector to read
+    mov bx, 0x7E00      ; Data should be after the bootloader
+    call disk_read
 
     ; Print message
     mov si, msg_hello
     call puts
 
-    hlt; Stops CPU from executing (it can be resumed by an interrupt.)
+    cli         ; Disables interrupts, this way the CPU can't get out of "halt" state.
+    hlt         ; Stops CPU from executing (it can be resumed by an interrupt.)
+
+;
+; Error handlers
+;
+
+floppy_error:
+    mov si, msg_read_failed
+    call puts
+    jmp wait_key_and_reboot
+
+wait_key_and_reboot:
+    mov ah, 0
+    int 16h                 ; Wait for keypress.
+    jmp 0FFFFh:0            ; Jump to beginning of BIOS, should reboot.
 
 .halt:
-    jmp .halt; Jumps to given location, unconditionally (equivalent with goto instruction in C.)
+    cli                     ; Disables interrupts, this way the CPU can't get out of "halt" state.
+    hlt
 
-msg_hello: db 'Hello World!', ENDL, 0
+
+
+;
+; Disk routines
+;
+
+
+;
+; Converts an LBA address to a CHS address
+; Params:
+;   - ax: LBA address
+; Returns:
+;   - cx [bites 0-5]: sector number
+;   - cx [bites 6-15]: cylinder
+;   - dh: head
+;
+lba_to_chs:
+    ; Divide the logical block address by the number of sectors per track.
+    
+    push ax
+    push dx
+
+    xor dx, dx                          ; Sets dx to 0 as dx will always equal to itself.
+    div word [bdb_sectors_per_track]    ; ax = LBA / SectorsPerTrack
+                                        ; dx = LBA % SectorsPerTrack
+    inc dx                              ; dx = LBA % SectorsPerTrack + 1 = sector
+
+    mov cx, dx                          ; cx = sector
+    
+    xor dx, dx
+    div word [bdb_heads]                ; ax = (LBA / SectorsPerTrack) / Heads = cylinder
+                                        ; dx = (LBA / SectorsPerTrack) % Heads = head
+    mov dh, dl                          ; dl = head
+    mov ch, al                          ; ch = cylinder (lower 8 bits)
+    shl ah, 6
+    or cl, ah                           ; Puts the upper 2 bits of cylinder in CL.
+
+    pop ax
+    mov dl, al                          ; Restores DL.
+    pop ax
+    ret
+
+;
+; Reads sectors from a disk
+; Params:
+;   - ax: LBA address
+;   - cl: number of sectors to read (up to 128)
+;   - dl: drive number
+;   - es:bx: memory address where to store read data
+;
+disk_read:
+    push ax                 ; Save registers we will modify.
+    push bx
+    push cx
+    push dx
+    push di
+
+    push cx                 ; Temporarily saves CL (number of sectors to read.)
+    call lba_to_chs         ; Compute CHS
+    pop ax                  ; AL = number of sectors to read
+
+    mov ah, 02h
+    mov di, 3               ; Retry count
+
+.retry:
+    pusha                   ; Save all registers, we don't know what BIOS modifies.
+    stc                     ; Set carry flag, some BIOS'es don't set it.
+    int 13h                 ; Carry flag cleared = success
+    jnc .done               ; Jump if carry not set
+
+    ; Read failed.
+    popa
+    call disk_reset
+    dec di
+    test di, di
+    jnz .retry
+
+.fail:
+    ; All attempts are exhausted.
+    jmp floppy_error
+
+.done:
+    popa
+
+    pop di
+    pop dx
+    pop cx
+    pop bx
+    pop ax                 ; Restore registers modified
+
+    ret
+
+;
+; Resets disk controller
+; Params:
+;   - dl: drive number
+;
+disk_reset:
+    pusha
+    mov ah, 0
+    stc
+    int 13h
+    jc floppy_error
+    popa
+    ret
+
+
+msg_hello:              db 'Hello World!', ENDL, 0
+msg_read_failed:        db 'Read from disk failed!', ENDL, 0
 
 
 

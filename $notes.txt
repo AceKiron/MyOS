@@ -13,9 +13,9 @@ int 10h -- Video
         BL = foreground pixel color (graphics modes.)
  
         Returns nothing
-    int 11h -- Equipment Check
-    int 12h -- Memory Size
-    int 13h -- Disk I/O
-    int 14h -- Serial communications
-    int 15h -- Cassette
-    int 16h -- Keyboard I/O
+int 11h -- Equipment Check
+int 12h -- Memory Size
+int 13h -- Disk I/O
+int 14h -- Serial communications
+int 15h -- Cassette
+int 16h -- Keyboard I/O
