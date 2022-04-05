@@ -24,3 +24,8 @@ jobs:
     
     - name: Try to build
       run: make
+  
+    - name: "Build tool: fat"
+      run: |
+        make tools_fat
+        ./build/tools/fat build/main_floppy.img "TEST    TXT"
