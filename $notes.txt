@@ -1,0 +1,24 @@
+Run with qemu-system-i386 -fda build/main_floppy.img
+
+
+Examples of BIOS interrupts:
+int 10h -- Video
+    AH = 00h -- Set Video Mode
+    AH = 01h -- Set Cursor Shape
+    AH = 02h -- Set Cursor Position
+    AH = 03h -- Get Cursor Position And Shape
+    AH = 0Eh -- Write Character In TTY Mode
+        Prints a character to the screen in TTY mode. Cursor automatically advances.
+        Characters BEL(7), BS(8), LF(A) and CR(D) are treated as control codes.
+ 
+        AL = ASCII character to write.
+        BH = Page number (text modes.)
+        BL = foreground pixel color (graphics modes.)
+ 
+        Returns nothing
+    int 11h -- Equipment Check
+    int 12h -- Memory Size
+    int 13h -- Disk I/O
+    int 14h -- Serial communications
+    int 15h -- Cassette
+    int 16h -- Keyboard I/O
