@@ -1,6 +1,3 @@
-Run with qemu-system-i386 -fda build/main_floppy.img
-
-
 Examples of BIOS interrupts:
 int 10h -- Video
     AH = 00h -- Set Video Mode

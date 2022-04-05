@@ -1,0 +1,1 @@
+`make` to build the operating system, `make run` to run it using qemu-system-i386. `make clean` removes everything in the build directory.
