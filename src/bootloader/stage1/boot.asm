@@ -347,11 +347,11 @@ disk_reset:
     ret
 
 
-file_kernel_bin:        db 'KERNEL  BIN'
+file_kernel_bin:        db 'STAGE2  BIN'
 
 msg_loading:            db 'Loading...', ENDL, 0
 msg_read_failed:        db 'Read from disk failed!', ENDL, 0
-msg_kernel_not_found:   db 'KERNEL.BIN file not found!', ENDL, 0
+msg_kernel_not_found:   db 'STAGE2.BIN file not found!', ENDL, 0
 
 kernel_cluster:         dw 0
 

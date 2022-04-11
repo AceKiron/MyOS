@@ -24,3 +24,5 @@ int 16h -- Keyboard I/O
 Tutorial:
 https://github.com/chibicitiberiu/nanobyte_os
 https://www.youtube.com/channel/UCSPIuWADJIMIf9Erf--XAsA
+
+Left at https://www.youtube.com/watch?v=F3XiH78erNM&list=PLFjM7v6KGMpiH2G-kT781ByCNC_0pKpPN&index=4 at 23:50
