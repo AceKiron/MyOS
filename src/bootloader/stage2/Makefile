@@ -1,8 +1,8 @@
 BUILD_DIR ?= build
 ASM ?= nasm
 
-CC16 ?= /usr/bin/watcom/binl/wcc
-LD16 ?= /usr/bin/watcom/binl/wlink
+CC16 ?= wcc
+LD16 ?= wlink
 
 ASMFLAGS ?= -f obj
 CFLAGS16 ?= -4 -d3 -s -wx -ms -zl -zq
