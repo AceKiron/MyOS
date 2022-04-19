@@ -120,8 +120,7 @@ void _cdecl printf(const char* fmt, ...) {
                               argp = printf_number(argp, length, sign, radix);
                               break;
                     
-                    default:  putc(*fmt);
-                              break;
+                    default: break;
                 }
 
                 // reset state
