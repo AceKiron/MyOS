@@ -21,7 +21,7 @@ _x86_div64_32:
 
     ; Store upper 32 bits of quotient
     mov bx, [bp + 16]
-    mov [bx], eax
+    mov [bx + 4], eax
 
     ; Divide lower 32 bits
     mov eax, [bp + 4]; eax <- lower 32 bits of dividend
