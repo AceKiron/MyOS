@@ -6,7 +6,7 @@ section _TEXT class=CODE
 ; void _cdecl x86_div64_32(uint64_t dividend, uint32_t divisor, uint32_t* quotientOut, uint64_t* remainderOut)
 ;
 global _x86_div64_32; Exports the _x86_div64_32 function
-_x86_div64_32::
+_x86_div64_32:
     ; Make new call frame
     push bp; Save old call frame
     mov bp, sp; Initialize new call frame
@@ -15,7 +15,7 @@ _x86_div64_32::
 
     ; Divide upper 32 bits
     mov eax, [bp + 4]; eax <- upper 32 bits of dividend
-    mov ecx [bp + 12]; ecx <- divisor
+    mov ecx, [bp + 12]; ecx <- divisor
     xor edx, edx
     div ecx; eax - quot, edx - remainder
 
