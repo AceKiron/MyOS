@@ -119,10 +119,9 @@ void _cdecl printf(const char* fmt, ...) {
     }
 }
 
-int* printf_number(int* argp, int length, bool sign, int radix);
-
 const char g_HexChars[] = "0123456789abcdef";
 
+int* printf_number(int* argp, int length, bool sign, int radix);
 int* printf_number(int* argp, int length, bool sign, int radix) {
     char buffer[32];
     unsigned long long number;
