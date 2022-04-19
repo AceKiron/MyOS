@@ -42,8 +42,6 @@ void _cdecl printf(const char* fmt, ...) {
 
     argp++;
     
-    puts("printf mark 2");
-    
     while (*fmt) {
         switch (state) {
             case PRINTF_STATE_NORMAL:
@@ -134,9 +132,9 @@ void _cdecl printf(const char* fmt, ...) {
         }
 
         fmt++;
+        
+        putc(fmt);
     }
-    
-    puts("printf mark 3");
 }
 
 const char g_HexChars[] = "0123456789abcdef";
