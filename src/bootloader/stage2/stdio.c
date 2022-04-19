@@ -24,6 +24,7 @@ void puts(const char* str) {
 #define PRINTF_LENGTH_LONG         3
 #define PRINTF_LENGTH_LONG_LONG    4
 
+int* printf_number(int* argp, int length, bool sign, int radix);
 
 void _cdecl printf(const char* fmt, ...) {
     int* argp = (int*) &fmt;
@@ -121,7 +122,6 @@ void _cdecl printf(const char* fmt, ...) {
 
 const char g_HexChars[] = "0123456789abcdef";
 
-int* printf_number(int* argp, int length, bool sign, int radix);
 int* printf_number(int* argp, int length, bool sign, int radix) {
     char buffer[32];
     unsigned long long number;
