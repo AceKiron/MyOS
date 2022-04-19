@@ -86,15 +86,15 @@ void _cdecl printf(const char* fmt, ...) {
                               argp++;
                               break;
                     
-                    case 's': //puts(*(char**) argp);
-                              //argp++;
-                              if (length == PRINTF_LENGTH_LONG || length == PRINTF_LENGTH_LONG_LONG) {
+                    case 's': puts(*(char**) argp);
+                              argp++;
+                              /*if (length == PRINTF_LENGTH_LONG || length == PRINTF_LENGTH_LONG_LONG) {
                                   puts_f(*(const char far**) argp);
                                   argp += 2;
                               } else  {
                                   puts(*(const char**) argp);
                                   argp++;
-                              }
+                              }*/
 
                               break;
                     
