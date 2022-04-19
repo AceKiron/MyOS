@@ -12,6 +12,13 @@ void puts(const char* str) {
     }
 }
 
+void puts_f(const char far* str) {
+    while(*str) {
+        putc(*str);
+        str++;
+    }
+}
+
 #define PRINTF_STATE_NORMAL       0
 #define PRINTF_STATE_LENGTH       1
 #define PRINTF_STATE_LENGTH_SHORT 2
@@ -79,8 +86,16 @@ void _cdecl printf(const char* fmt, ...) {
                               argp++;
                               break;
                     
-                    case 's': puts(*(char**) argp);
-                              argp++;
+                    case 's': //puts(*(char**) argp);
+                              //argp++;
+                              if (length == PRINTF_LENGTH_LONG || length == PRINTF_LENGTH_LONG_LONG) {
+                                  puts_f(*(const char far**) argp);
+                                  argp += 2;
+                              } else  {
+                                  puts(*(const char**) argp);
+                                  argp++;
+                              }
+
                               break;
                     
                     case '%': putc('%');
