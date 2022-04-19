@@ -34,6 +34,10 @@ void puts_f(const char far* str) {
 int* printf_number(int* argp, int length, bool sign, int radix);
 
 void _cdecl printf(const char* fmt, ...) {
+    puts("printf mark 1");
+    puts(fmt);
+    puts("\n");
+    
     int* argp = (int*) &fmt;
     int state = PRINTF_STATE_NORMAL;
     int length = PRINTF_LENGTH_DEFAULT;
@@ -41,6 +45,8 @@ void _cdecl printf(const char* fmt, ...) {
     bool sign = false;
 
     argp++;
+    
+    puts("printf mark 2");
     
     while (*fmt) {
         switch (state) {
@@ -133,6 +139,8 @@ void _cdecl printf(const char* fmt, ...) {
 
         fmt++;
     }
+    
+    puts("printf mark 3");
 }
 
 const char g_HexChars[] = "0123456789abcdef";
