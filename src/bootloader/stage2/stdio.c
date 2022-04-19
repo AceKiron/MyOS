@@ -34,10 +34,6 @@ void puts_f(const char far* str) {
 int* printf_number(int* argp, int length, bool sign, int radix);
 
 void _cdecl printf(const char* fmt, ...) {
-    puts("printf mark 1");
-    puts(fmt);
-    puts("\n");
-    
     int* argp = (int*) &fmt;
     int state = PRINTF_STATE_NORMAL;
     int length = PRINTF_LENGTH_DEFAULT;
