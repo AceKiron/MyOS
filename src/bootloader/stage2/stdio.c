@@ -44,7 +44,6 @@ void _cdecl printf(const char* fmt, ...) {
     
     while (*fmt) {
         putc(*fmt);
-        putc('\n');
         
         switch (state) {
             case PRINTF_STATE_NORMAL:
@@ -132,10 +131,12 @@ void _cdecl printf(const char* fmt, ...) {
                 break;
         }
         
-        puts("\n");
-
         fmt++;
+        
+        putc(*fmt);
     }
+    
+    puts("\r\nExited loop\r\n");
 }
 
 const char g_HexChars[] = "0123456789abcdef";
