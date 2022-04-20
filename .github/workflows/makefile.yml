@@ -38,10 +38,13 @@ jobs:
         make tools_fat
         ./build/tools/fat build/main_floppy.img "TEST    TXT"
 
-    - uses: actions/upload-artifact@v3
+    - name: Release
+      uses: softprops/action-gh-release@v1
       with:
-        name: main_floppy
-        path: build/main_floppy.img
+        files: build/main_floppy.img
+        prerelease: true
+        body: Test release by Github Actions
+        draft: true
 
     #- name: Run
     #  run: qemu-system-i386 -fda build/main_floppy.img -nographic
