@@ -45,6 +45,3 @@ jobs:
         prerelease: true
         body: Test release by Github Actions
         draft: true
-
-    #- name: Run
-    #  run: qemu-system-i386 -fda build/main_floppy.img -nographic
