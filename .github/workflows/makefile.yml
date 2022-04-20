@@ -38,5 +38,10 @@ jobs:
         make tools_fat
         ./build/tools/fat build/main_floppy.img "TEST    TXT"
 
-    - name: Run
-      run: qemu-system-i386 -fda build/main_floppy.img -nographic
+    - uses: actions/upload-artifact@v3
+      with:
+        name: main_floppy
+        path: build/main_floppy.img
+
+    #- name: Run
+    #  run: qemu-system-i386 -fda build/main_floppy.img -nographic
