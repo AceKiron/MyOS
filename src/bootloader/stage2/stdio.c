@@ -131,8 +131,6 @@ void _cdecl printf(const char* fmt, ...) {
         
         fmt++;
     }
-    
-    puts("\r\nExited loop\r\n");
 }
 
 const char g_HexChars[] = "0123456789abcdef";
