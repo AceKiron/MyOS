@@ -43,8 +43,8 @@ void _cdecl printf(const char* fmt, ...) {
     argp++;
     
     while (*fmt) {
-        putc('a');
         putc(*fmt);
+        putc('\n');
         
         switch (state) {
             case PRINTF_STATE_NORMAL:
@@ -132,7 +132,7 @@ void _cdecl printf(const char* fmt, ...) {
                 break;
         }
         
-        puts("\nEnd\n");
+        puts("\n");
 
         fmt++;
     }
